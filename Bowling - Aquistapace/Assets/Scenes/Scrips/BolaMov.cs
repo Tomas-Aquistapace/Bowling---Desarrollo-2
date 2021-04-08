@@ -28,18 +28,20 @@ public class BolaMov : MonoBehaviour
     
     void Update()
     {
-        if (launch == false)
-            horizontal = Input.GetAxis("Horizontal");
+        horizontal = Input.GetAxis("Horizontal");
 
         Jump();
     }
 
     void FixedUpdate()
     {
-        Vector3 movementHor = transform.right * horizontal * speed * Time.deltaTime;
-        
-        rig.MovePosition(rig.position + movementHor);
-        rig.position = new Vector3(Mathf.Clamp(rig.position.x, minX, maxX), rig.position.y, rig.position.z);
+        if (launch == false)
+        {
+            Vector3 movementHor = transform.right * horizontal * speed * Time.deltaTime;
+
+            rig.MovePosition(rig.position + movementHor);
+            rig.position = new Vector3(Mathf.Clamp(rig.position.x, minX, maxX), rig.position.y, rig.position.z);
+        }
     }
 
     void Jump()
