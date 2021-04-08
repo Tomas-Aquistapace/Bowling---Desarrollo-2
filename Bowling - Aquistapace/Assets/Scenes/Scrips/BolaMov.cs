@@ -7,7 +7,7 @@ public class BolaMov : MonoBehaviour
     [Header("Bola Data")]
     public float speed = 1;
     public float force = 1;
-    //private float FORCE_INCREMENT = 100;
+    private float FORCE_INCREMENT = 3;
 
     [Header("Limits in X")]
     public float minX;
@@ -16,8 +16,7 @@ public class BolaMov : MonoBehaviour
     [HideInInspector]
     public Rigidbody rig;
     private float horizontal;
-
-    public bool launch;
+    private bool launch;
 
     void Start()
     {
@@ -52,6 +51,15 @@ public class BolaMov : MonoBehaviour
             rig.useGravity = true;
 
             launch = true;
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag ("Canaleta"))
+        {
+            rig.AddForce(transform.forward * FORCE_INCREMENT, ForceMode.VelocityChange);
+            //Debug.Log("Colisiono canaleta");
         }
     }
 }
