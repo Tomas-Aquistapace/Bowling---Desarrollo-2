@@ -8,8 +8,9 @@ public class UImanager : MonoBehaviour
     public BolaMov bola;
     public GameObject finalPoints;
     public Text textPoints;
-
+    public Text valuePinos;
     public float pointsPerPine = 10;
+    public float maxPoints = 100;
 
     public List<PinoPoint> Pinos;
     public List<Image> ImagePinos;
@@ -22,9 +23,20 @@ public class UImanager : MonoBehaviour
     {
         finalPoints.SetActive(false);
         points = 0;
+
+        valuePinos.text = pointsPerPine.ToString();
     }
 
     void Update()
+    {
+        PointsController();
+
+        ShotsController();
+
+        ShowPoints();
+    }
+
+    void PointsController()
     {
         for (int i = 0; i < Pinos.Count; i++)
         {
@@ -35,9 +47,10 @@ public class UImanager : MonoBehaviour
             }
         }
 
-        ShowPoints();
-
-        ShotsController();
+        if (points >= maxPoints)
+        {
+            bola.StopForPoints();
+        }
     }
 
     void ShowPoints()

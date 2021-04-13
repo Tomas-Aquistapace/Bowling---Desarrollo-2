@@ -20,6 +20,7 @@ public class BolaMov : MonoBehaviour
     [HideInInspector] public Rigidbody rig;
     [HideInInspector] public bool stop;
     [HideInInspector] public bool launch;
+    [HideInInspector] public bool stopGame;
     [HideInInspector] public float actualShot;
     private float horizontal;
     private Vector3 spawPosition;
@@ -33,31 +34,36 @@ public class BolaMov : MonoBehaviour
         spawnBola();
 
         actualShot = 0;
+
+        stopGame = false;
     }
 
     void spawnBola()
     {
-        rig.useGravity = false;
-        launch = false;
-        stop = false;
+        if (stopGame == false)
+        {
+            rig.useGravity = false;
+            launch = false;
+            stop = false;
 
-        transform.position = spawPosition;
-        transform.rotation = new Quaternion(0,0,0,1);
+            transform.position = spawPosition;
+            transform.rotation = new Quaternion(0, 0, 0, 1);
 
-        rig.isKinematic = true;
+            rig.isKinematic = true;
+        }
     }
 
     void Update()
     {
         horizontal = Input.GetAxis("Horizontal");
 
-        Stop();
+        StopBola();
         ThrowTheBall();
     }
 
     void FixedUpdate()
     {
-        if (launch == false)
+        if (launch == false && stopGame == false)
         {
             Vector3 movementHor = transform.right * horizontal * speed * Time.deltaTime;
 
@@ -70,28 +76,40 @@ public class BolaMov : MonoBehaviour
     {
         rig.isKinematic = false;
 
-        if (Input.GetKeyDown("space") && launch == false)
+        if (Input.GetKeyDown("space") && launch == false && stopGame == false)
         {
-
             rig.AddForce(transform.forward * force, ForceMode.VelocityChange);
             rig.useGravity = true;
 
             launch = true;
+
+            actualShot++;
         }
     }
 
-    void Stop()
+    void StopBola()
     {
-        if (rig.velocity.magnitude < minimumSpeed && (rig.velocity.magnitude != 0) && launch == true)
+        if (rig.velocity.magnitude < minimumSpeed && (rig.velocity.magnitude != 0) && launch == true && stopGame == false)
         {
             stop = true;
-            actualShot++;
 
             if (actualShot < maxThrowBola)
             {
                 spawnBola();
             }
+            else
+            {
+                stopGame = true;
+            }
         }
+    }
+
+    public void StopForPoints()
+    {
+        //actualShot = maxThrowBola;
+
+        stopGame = true;
+        stop = true;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -101,10 +119,9 @@ public class BolaMov : MonoBehaviour
             rig.AddForce(transform.forward * FORCE_INCREMENT, ForceMode.VelocityChange);
         }
 
-        if (collision.gameObject.CompareTag("Final"))
+        if (collision.gameObject.CompareTag("Final") && stopGame == false)
         {
             stop = true;
-            actualShot++;
 
             if (actualShot < maxThrowBola)
             {
