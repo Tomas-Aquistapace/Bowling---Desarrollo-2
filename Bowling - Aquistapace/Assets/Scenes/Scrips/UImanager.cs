@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UImanager : MonoBehaviour
 {
@@ -80,5 +80,10 @@ public class UImanager : MonoBehaviour
         {
             NumberOfShots[2].color = Color.black;
         }
+    }
+
+    public void ReturnMenu()
+    {
+        SceneManager.LoadScene("Menu");
     }
 }
