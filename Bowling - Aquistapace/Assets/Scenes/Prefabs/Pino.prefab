@@ -125,6 +125,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fdcbc0134438db44b9480416f502e56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minX: -2
+  maxX: 2
+  minZ: 0
+  maxZ: 9.5
   inTheFloor: 0
 --- !u!1 &6649994882259669651
 GameObject:

@@ -8,14 +8,18 @@ public class BolaMov : MonoBehaviour
     public float maxThrowBola = 3;
 
     [Header("Bola Data")]
-    public float speed = 1;
-    public float force = 1;
+    public float horSpeed = 1;
+    public float maxForce = 1;
+    private float activeForce = 1;
     private float FORCE_INCREMENT = 3;
     public float minimumSpeed = 0.005f;
 
     [Header("Limits in X")]
     public float minX;
     public float maxX;
+
+    [Header("Arrow Force")]
+    public Transform arrowForce;
 
     [HideInInspector] public Rigidbody rig;
     [HideInInspector] public bool stop;
@@ -46,6 +50,9 @@ public class BolaMov : MonoBehaviour
             launch = false;
             stop = false;
 
+            activeForce = 0;
+            arrowForce.localScale = Vector3.one;
+
             transform.position = spawPosition;
             transform.rotation = new Quaternion(0, 0, 0, 1);
 
@@ -65,7 +72,7 @@ public class BolaMov : MonoBehaviour
     {
         if (launch == false && stopGame == false)
         {
-            Vector3 movementHor = transform.right * horizontal * speed * Time.deltaTime;
+            Vector3 movementHor = transform.right * horizontal * horSpeed * Time.deltaTime;
 
             rig.MovePosition(rig.position + movementHor);
             rig.position = new Vector3(Mathf.Clamp(rig.position.x, minX, maxX), rig.position.y, rig.position.z);
@@ -76,14 +83,25 @@ public class BolaMov : MonoBehaviour
     {
         rig.isKinematic = false;
 
-        if (Input.GetKeyDown("space") && launch == false && stopGame == false)
+        if (Input.GetKey("space") && launch == false && stopGame == false)
         {
-            rig.AddForce(transform.forward * force, ForceMode.VelocityChange);
+            if (activeForce < maxForce)
+            {
+                activeForce += Time.deltaTime * 2;
+
+                arrowForce.localScale += new Vector3(0, 0, activeForce * Time.deltaTime * 2);
+            }
+        }
+        else if (Input.GetKeyUp("space") && launch == false && stopGame == false)
+        {
+            rig.AddForce(transform.forward * activeForce, ForceMode.VelocityChange);
             rig.useGravity = true;
 
             launch = true;
 
             actualShot++;
+
+            arrowForce.localScale = Vector3.one;
         }
     }
 
