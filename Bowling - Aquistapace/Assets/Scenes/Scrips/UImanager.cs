@@ -13,6 +13,7 @@ public class UImanager : MonoBehaviour
 
     public List<PinoPoint> Pinos;
     public List<Image> ImagePinos;
+    public List<Image> NumberOfShots;
 
     private float points;
     private float timeCount;
@@ -35,19 +36,36 @@ public class UImanager : MonoBehaviour
         }
 
         ShowPoints();
+
+        ShotsController();
     }
 
-    void ShowPoints() //&& bola.launch == false
+    void ShowPoints()
     {
         if (bola.stop == true && timeCount >= 2)
         {
             finalPoints.SetActive(true);
             textPoints.text = points.ToString();
         }
-        else if (bola.stop == true)// && bola.launch == false)
+        else if (bola.stop == true)
         {
             timeCount += Time.deltaTime;
-            //Debug.Log(timeCount);
+        }
+    }
+
+    void ShotsController()
+    {
+        if (bola.actualShot == 1)
+        {
+            NumberOfShots[0].color = Color.black;
+        }
+        else if (bola.actualShot == 2)
+        {
+            NumberOfShots[1].color = Color.black;
+        }
+        else if (bola.actualShot == 3)
+        {
+            NumberOfShots[2].color = Color.black;
         }
     }
 }
