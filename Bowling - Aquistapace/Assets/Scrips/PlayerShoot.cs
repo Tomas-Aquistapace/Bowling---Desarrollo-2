@@ -6,6 +6,8 @@ public class PlayerShoot : MonoBehaviour
 {
     public int range = 30;
     public float impactForce = 30f;
+    public GameObject impactEffect;
+    public GameObject failEffect;
 
     [HideInInspector] public bool stop;
     private Camera cam;
@@ -41,11 +43,16 @@ public class PlayerShoot : MonoBehaviour
             if (layerHit == "Pino" && hit.rigidbody != null)
             {
                 hit.rigidbody.AddForce(-hit.normal * impactForce, ForceMode.Impulse);
+                GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(impactGO, 2f);
             }
             else
             {
+                GameObject failGO = Instantiate(failEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(failGO, 2f);
                 StopGame(true);
             }
+
         }
     }
 

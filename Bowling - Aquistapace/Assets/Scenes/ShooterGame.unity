@@ -530,6 +530,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 40
   impactForce: 200
+  impactEffect: {fileID: 100004, guid: b46890100828db6429ff69c322b45893, type: 3}
+  failEffect: {fileID: 100002, guid: 6ecf76dc4f268d340b2666896a954bcc, type: 3}
   stop: 0
 --- !u!1 &432055044
 GameObject:
