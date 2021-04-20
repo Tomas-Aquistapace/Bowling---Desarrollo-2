@@ -66,6 +66,7 @@ public class BolaMov : MonoBehaviour
 
         StopBola();
         ThrowTheBall();
+        Exit();
     }
 
     void FixedUpdate()
@@ -122,10 +123,17 @@ public class BolaMov : MonoBehaviour
         }
     }
 
+    void Exit()
+    {
+        if (Input.GetButtonDown("Cancel") && stop == false)
+        {
+            stopGame = true;
+            stop = true;
+        }
+    }
+
     public void StopForPoints()
     {
-        //actualShot = maxThrowBola;
-
         stopGame = true;
         stop = true;
     }

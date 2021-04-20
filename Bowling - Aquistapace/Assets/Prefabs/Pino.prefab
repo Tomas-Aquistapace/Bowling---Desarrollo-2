@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 2388952541133227310}
   - component: {fileID: -7141793270886850507}
   - component: {fileID: 2118048017}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Pino
-  m_TagString: Untagged
+  m_TagString: Pino
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 4744719555168909225}
   - component: {fileID: 2143387857697603667}
   - component: {fileID: 406937909692516541}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Part_baja
   m_TagString: Untagged
   m_Icon: {fileID: 0}
